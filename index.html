@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviator oyini uchun bashorat - Ko'rish O'yini</title>
+    <title>Aviator Signal</title>
     <style>
         * {
             margin: 0;
@@ -17,99 +17,114 @@
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
-            padding: 20px;
+            padding: 15px;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
         }
         
         header {
             text-align: center;
-            padding: 30px 0;
+            padding: 20px 0;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
         
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
             color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             color: #ccc;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            padding: 0 10px;
         }
         
         .card {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+        }
+        
+        .card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #FFD700;
+        }
+        
+        .card p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: #FFD700;
+            font-size: 0.9rem;
         }
         
         input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            font-size: 1rem;
+            font-size: 0.9rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         input:focus {
             outline: none;
             border-color: #FFD700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
         }
         
         .error-message {
             color: #ff6b6b;
-            font-size: 0.9rem;
-            margin-top: 5px;
+            font-size: 0.8rem;
+            margin-top: 4px;
             display: none;
         }
         
         .btn {
             display: block;
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             background: linear-gradient(135deg, #FFD700, #FFA000);
             color: #333;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
         }
         
         .btn:active {
@@ -126,19 +141,25 @@
         
         .warning {
             background: rgba(255, 193, 7, 0.2);
-            border-left: 5px solid #FFC107;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
+            border-left: 4px solid #FFC107;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .warning p {
+            font-size: 0.8rem;
+            margin-bottom: 8px;
         }
         
         .game-area {
             background: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             position: relative;
-            height: 500px;
+            height: 350px;
             overflow: hidden;
+            margin: 15px 0;
         }
         
         .sky {
@@ -153,30 +174,30 @@
         
         .airplane {
             position: absolute;
-            bottom: 50px;
-            left: 50px;
-            width: 120px;
-            height: 60px;
+            bottom: 30px;
+            left: 30px;
+            width: 80px;
+            height: 40px;
             background-image: url('https://www.mileurismogourmet.com/wp-content/uploads/2024/06/aviatorjuego1.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             z-index: 20;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
             transition: all 3s ease-in-out;
         }
         
         .multiplier-display {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #FFD700;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
             background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 8px 15px;
+            border-radius: 8px;
             z-index: 30;
         }
         
@@ -186,12 +207,13 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.8);
-            padding: 20px 40px;
-            border-radius: 10px;
-            font-size: 1.5rem;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
             text-align: center;
             z-index: 100;
             display: none;
+            width: 90%;
         }
         
         .crash-message {
@@ -200,11 +222,12 @@
         
         .user-id-display {
             background: rgba(255, 215, 0, 0.2);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin: 15px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 12px 0;
             text-align: center;
-            border-left: 4px solid #FFD700;
+            border-left: 3px solid #FFD700;
+            font-size: 0.9rem;
         }
         
         .hidden {
@@ -228,18 +251,18 @@
         .matrix-code {
             color: #0f0;
             font-family: monospace;
-            font-size: 1.2rem;
+            font-size: 1rem;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .progress-bar {
             width: 80%;
-            height: 10px;
+            height: 8px;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
+            border-radius: 4px;
             overflow: hidden;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         
         .progress {
@@ -251,39 +274,44 @@
         
         .share-section {
             text-align: center;
-            margin: 30px 0;
+            margin: 20px 0;
         }
         
         .share-btn {
             background: linear-gradient(135deg, #2196F3, #0b7dda);
             display: inline-block;
-            margin: 5px;
-            padding: 10px 20px;
-            border-radius: 50px;
+            margin: 4px;
+            padding: 10px 15px;
+            border-radius: 40px;
             cursor: pointer;
             border: none;
             color: white;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
         }
         
         .share-progress {
-            margin: 20px 0;
+            margin: 15px 0;
             text-align: center;
         }
         
         .share-count {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #FFD700;
         }
         
         .info-box {
             background: rgba(33, 150, 243, 0.2);
-            border-left: 5px solid #2196F3;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .info-box p {
+            font-size: 0.8rem;
+            margin-bottom: 0;
         }
         
         .cloud {
@@ -317,15 +345,15 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 100px;
+            height: 60px;
             background: linear-gradient(to top, #8B4513, #654321);
             z-index: 5;
         }
         
         .explosion {
             position: absolute;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             background: radial-gradient(circle, #ff0000, #ff4500, transparent 70%);
             border-radius: 50%;
             opacity: 0;
@@ -334,32 +362,168 @@
             transition: all 0.5s ease;
         }
         
-        @media (max-width: 768px) {
-            .container {
+        /* Telegram xabari modal oynasi */
+        .telegram-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        
+        .telegram-content {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .telegram-content h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .telegram-message {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #333;
+            border-left: 4px solid #0088cc;
+        }
+        
+        .telegram-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .telegram-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .telegram-copy {
+            background: #FFD700;
+            color: #333;
+        }
+        
+        .telegram-open {
+            background: #0088cc;
+            color: white;
+        }
+        
+        .telegram-close {
+            background: #666;
+            color: white;
+        }
+        
+        /* Kichik ekranlar uchun maxsus sozlamalar */
+        @media (max-width: 480px) {
+            body {
                 padding: 10px;
             }
             
             header {
-                padding: 20px 0;
-                margin-bottom: 20px;
+                padding: 15px 0;
+                margin-bottom: 15px;
             }
             
             h1 {
-                font-size: 2.2rem;
+                font-size: 1.4rem;
+            }
+            
+            .subtitle {
+                font-size: 0.8rem;
+                padding: 0 8px;
             }
             
             .card {
-                padding: 20px;
-                margin-bottom: 20px;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .card h2 {
+                font-size: 1.1rem;
+            }
+            
+            .card p {
+                font-size: 0.8rem;
             }
             
             .game-area {
-                height: 400px;
+                height: 300px;
+                padding: 10px;
             }
             
             .airplane {
-                width: 80px;
-                height: 40px;
+                width: 70px;
+                height: 35px;
+                bottom: 25px;
+                left: 25px;
+            }
+            
+            .multiplier-display {
+                font-size: 1.3rem;
+                padding: 6px 12px;
+            }
+            
+            .message {
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+            
+            .user-id-display {
+                font-size: 0.85rem;
+                padding: 6px 10px;
+            }
+            
+            .telegram-content {
+                padding: 15px;
+            }
+            
+            .telegram-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            .subtitle {
+                font-size: 0.75rem;
+            }
+            
+            .game-area {
+                height: 280px;
+            }
+            
+            .airplane {
+                width: 60px;
+                height: 30px;
+            }
+            
+            .multiplier-display {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -367,28 +531,28 @@
 <body>
     <div class="container">
         <header>
-            <h1>✈️ AVIATOR oyini uchun bashorat</h1>
-            <p class="subtitle">Samolyot balandlikka ko'tariladi - O'z vaqtda chiqib oling!</p>
+            <h1>✈️ AVIATOR Signal</h1>
+            <p class="subtitle">Samolyot balandlikka ko'tariladi - O'z vaqtida chiqib oling! 🚀</p>
         </header>
         
         <div class="card" id="loginSection">
-            <h2>AIFUT promokodi orqali toliq royhatdan otgan profillarda ishlaydi!</h2>
+            <h2>AIFUT promokodi bilan ro'yxatdan o'ting</h2>
             <p>O'yinni oldindan ko'rish uchun ID raqamingizni kiriting</p>
             
             <div class="form-group">
                 <label for="userId">ID Raqamingiz</label>
                 <input type="text" id="userId" placeholder="ID raqamingizni kiriting..." maxlength="11">
-                <div class="error-message" id="idError">ID raqam notogri!</div>
+                <div class="error-message" id="idError">ID raqam noto'g'ri!</div>
             </div>
             
-            <button class="btn" id="startGameBtn">Signal olish</button>
+            <button class="btn" id="startGameBtn">Signal olish 🔮</button>
         </div>
         
         <div id="warningSection" class="card hidden">
             <h2>⚠️ Diqqat! Ogohlantirish</h2>
             <div class="warning">
-                <p><strong>Hurmatli o'yinchi, AZARTga berilmang!</strong></p>
-                <p>Kunlik yetarli daromadni olib to'xtating va dam oling. AIFUT promokod bilan royhatdan otmagan bolsangiz bloklanasiz</p>
+                <p><strong>AZARTga berilmang! 🎲</strong></p>
+                <p>Kunlik yetarli daromadni olib to'xtating. AIFUT promokod bilan ro'yxatdan o'tmagan bo'lsangiz bloklanasiz</p>
             </div>
             
             <div class="user-id-display">
@@ -396,11 +560,12 @@
             </div>
             
             <p>Tayyor bo'lsangiz, "Signal olish" tugmasini bosing.</p>
-            <button class="btn" id="confirmStartBtn">signal olish</button>
+            <button class="btn" id="confirmStartBtn">Signal olish 🔮</button>
         </div>
         
         <div id="gameSection" class="card hidden">
-            <h2>eslatma ushbu oyin paralel keladigan oyinni mood qiladi kelayotgan oyinga stavka qiling va ushbu kf ga yetmasdan yutuqni oling</h2>
+            <h2>Eslatma: Ushbu oyin kelayotgan oyinni modellashtiradi</h2>
+            <p>Kelayotgan oyinga stavka qiling va ushbu kf ga yetmasdan yutuqni oling. Samolyot kutilayotgan eng minimal kf da portlaydi.</p>
             
             <div class="user-id-display">
                 <strong>ID Raqamingiz:</strong> <span id="gameUserId"></span>
@@ -411,21 +576,21 @@
                     <div class="ground"></div>
                     <div class="multiplier-display" id="multiplierDisplay">1.00x</div>
                     <div class="airplane" id="airplane"></div>
-                    <div class="message crash-message" id="crashMessage">Samolyot portlab ketdi!</div>
+                    <div class="message crash-message" id="crashMessage">Mumkin bo'lgan minimal xavf!</div>
                 </div>
             </div>
             
-            <button class="btn" id="playAgainBtn">Yana O'ynash</button>
+            <button class="btn" id="playAgainBtn">Keyingi signalni bilish ➡️</button>
         </div>
         
         <div id="shareSection" class="card hidden">
-            <h2>Signal olishni  davom ettirish uchun 20 ta odam taklif qiling</h2>
+            <h2>20 kishiga taklif qiling 📢</h2>
             
             <div class="user-id-display">
                 <strong>ID Raqamingiz:</strong> <span id="shareUserId"></span>
             </div>
             
-            <p>Signal olishni davom ettirish va katta yutuqlarga erishish uchun do'stlaringiz bilan baham ko'ring!</p>
+            <p>Signal olishni davom ettirish va katta yutuqlarga erishish uchun do'stlaringiz bilan baham ko'ring! 🤝</p>
             
             <div class="share-progress">
                 <p>Taklif qilingan do'stlar: <span class="share-count" id="shareCount">0</span> / 20</p>
@@ -435,11 +600,29 @@
             </div>
             
             <div class="share-buttons">
-                <button class="btn share-btn" id="shareBtn">Do'stlarga Taklif Qilish</button>
+                <button class="btn share-btn" id="shareBtn">Do'stlarga Taklif Qilish 📤</button>
             </div>
             
             <div class="info-box">
                 <p><strong>Eslatma:</strong> FAQAT TELEGRAM ORQALI TAKLIF QILING</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Telegram xabari modal oynasi -->
+    <div id="telegramModal" class="telegram-modal hidden">
+        <div class="telegram-content">
+            <h3>📤 Telegram orqali taklif qiling</h3>
+            <p>Quyidagi xabarni nusxalang va Telegram'da do'stlaringizga yuboring:</p>
+            
+            <div class="telegram-message" id="telegramMessage">
+                Do'st 💫 bunday bot ko'rmagansan! Hozirroq qo'shil va pul ishlashni sen ham boshlash! 💰 @strategioyinlar_bot 🍎
+            </div>
+            
+            <div class="telegram-buttons">
+                <button class="telegram-btn telegram-copy" id="copyTelegramBtn">Nusxalash 📋</button>
+                <button class="telegram-btn telegram-open" id="openTelegramBtn">Telegram'ga o'tish ↗️</button>
+                <button class="telegram-btn telegram-close" id="closeTelegramBtn">Yopish ✖️</button>
             </div>
         </div>
     </div>
@@ -472,6 +655,13 @@
             const hackerProgress = document.getElementById('hackerProgress');
             const idError = document.getElementById('idError');
             const sky = document.getElementById('sky');
+            
+            // Telegram modal elementlari
+            const telegramModal = document.getElementById('telegramModal');
+            const telegramMessage = document.getElementById('telegramMessage');
+            const copyTelegramBtn = document.getElementById('copyTelegramBtn');
+            const openTelegramBtn = document.getElementById('openTelegramBtn');
+            const closeTelegramBtn = document.getElementById('closeTelegramBtn');
             
             // ID ko'rsatish elementlari
             const displayUserId = document.getElementById('displayUserId');
@@ -577,8 +767,8 @@
                 airplaneReachedCenter = false;
                 
                 // UI ni yangilash
-                airplane.style.bottom = '50px';
-                airplane.style.left = '50px';
+                airplane.style.bottom = '30px';
+                airplane.style.left = '30px';
                 airplane.style.transform = 'scale(1)';
                 multiplierDisplay.textContent = '1.00x';
                 multiplierDisplay.style.color = '#FFD700';
@@ -591,7 +781,7 @@
                 setTimeout(() => {
                     airplane.style.bottom = '50%';
                     airplane.style.left = '50%';
-                    airplane.style.transform = 'translate(-50%, 50%) scale(1.3)';
+                    airplane.style.transform = 'translate(-50%, 50%) scale(1.2)';
                     
                     setTimeout(() => {
                         airplaneReachedCenter = true;
@@ -661,7 +851,7 @@
                 
                 setTimeout(() => {
                     explosion.style.opacity = '0';
-                    explosion.style.transform = 'translate(-50%, 50%) scale(2)';
+                    explosion.style.transform = 'translate(-50%, 50%) scale(1.5)';
                 }, 500);
                 
                 setTimeout(() => {
@@ -711,12 +901,25 @@
                 shareProgress.style.width = (displayValue / 20 * 100) + '%';
             }
             
-            // Taklif qilish tugmasi - Telegram xabari
+            // Taklif qilish tugmasi - Telegram xabari modalini ochish
             shareBtn.addEventListener('click', function() {
-                const message = "Do'st 💫 bunday bot ko'rmagansan! Hozirroq qo'shil va pul ishlashni sen ham boshlash! 💰 @strategioyinlar_bot 🍎";
-                
-                // Xabarni nusxalash
+                telegramModal.classList.remove('hidden');
+            });
+            
+            // Telegram modal tugmalari
+            copyTelegramBtn.addEventListener('click', function() {
+                const message = telegramMessage.textContent;
                 copyToClipboard(message);
+                alert('Xabar nusxalandi! Endi Telegram\'da do\'stlaringizga yuborishingiz mumkin.');
+            });
+            
+            openTelegramBtn.addEventListener('click', function() {
+                // Telegram'ga o'tish
+                window.open('https://t.me/share/url?url=&text=' + encodeURIComponent(telegramMessage.textContent), '_blank');
+            });
+            
+            closeTelegramBtn.addEventListener('click', function() {
+                telegramModal.classList.add('hidden');
             });
             
             // Clipboard ga nusxalash funksiyasi
@@ -724,7 +927,7 @@
                 // Zamonaviy usul
                 if (navigator.clipboard && window.isSecureContext) {
                     navigator.clipboard.writeText(text).then(() => {
-                        alert('Xabar nusxalandi! Endi Telegram\'da do\'stlaringizga yuborishingiz mumkin.');
+                        console.log('Xabar nusxalandi');
                     }).catch(() => {
                         fallbackCopyToClipboard(text);
                     });
@@ -746,9 +949,8 @@
                 
                 try {
                     document.execCommand('copy');
-                    alert('Xabar nusxalandi! Endi Telegram\'da do\'stlaringizga yuborishingiz mumkin:\n\n' + text);
                 } catch (err) {
-                    alert('Quyidagi xabarni nusxalab, Telegram\'da do\'stlaringizga yuboring:\n\n' + text);
+                    console.error('Nusxalashda xatolik:', err);
                 }
                 
                 document.body.removeChild(textArea);
@@ -765,7 +967,7 @@
                     const cloud = document.createElement('div');
                     cloud.className = `cloud cloud-${i+1}`;
                     
-                    const size = Math.random() * 60 + 40;
+                    const size = Math.random() * 40 + 30;
                     const top = Math.random() * 70 + 10;
                     const opacity = Math.random() * 0.5 + 0.3;
                     
