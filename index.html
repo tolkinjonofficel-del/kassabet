@@ -3,990 +3,991 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviator Signal</title>
+    <title>OnlyBets - Aviator Signal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-yellow: #FFD700;
+            --primary-black: #000000;
+            --accent: #FFA500;
+            --light: #1a1a1a;
+            --text: #ffffff;
+            --glow-yellow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+            --glow-green: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+            --glow-blue: 0 0 10px #0066ff, 0 0 20px #0066ff;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', monospace;
         }
         
         body {
-            background: linear-gradient(135deg, #0c0c0c, #1a1a2e, #16213e);
-            color: #fff;
+            background-color: var(--primary-black);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-            padding: 15px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 0, 0.05) 0%, transparent 20%);
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
         }
         
         .container {
-            max-width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
         
         header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid var(--primary-yellow);
+            position: relative;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-yellow);
+            box-shadow: var(--glow-yellow);
+            animation: scanline 2s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-yellow);
+            text-shadow: var(--glow-yellow);
+            animation: textGlitch 5s infinite;
+            position: relative;
+            background: linear-gradient(45deg, #000000, #1a1a1a, #000000);
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 2px solid var(--primary-yellow);
+        }
+        
+        @keyframes textGlitch {
+            0%, 100% { transform: translateX(0); }
+            5% { transform: translateX(-2px); }
+            10% { transform: translateX(2px); }
+            15% { transform: translateX(0); }
+        }
+        
+        .logo-text::before {
+            content: 'ONLYBETS';
+            position: absolute;
+            left: 2px;
+            text-shadow: -2px 0 #ff0000;
+            clip: rect(0, 900px, 0, 0);
+            animation: noise-anim 2s infinite linear alternate-reverse;
+        }
+        
+        .logo-text::after {
+            content: 'ONLYBETS';
+            position: absolute;
+            left: -2px;
+            text-shadow: 2px 0 #00ffff;
+            clip: rect(0, 900px, 0, 0);
+            animation: noise-anim2 3s infinite linear alternate-reverse;
+        }
+        
+        .logo-subtext {
+            font-size: 14px;
+            color: var(--primary-yellow);
+            margin-top: -5px;
+            text-shadow: 0 0 5px var(--primary-yellow);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 0;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.2);
         }
         
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            background: linear-gradient(45deg, #FFD700, #FFA500, #FF8C00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-        }
-        
-        .subtitle {
-            font-size: 0.9rem;
-            color: #e0e0e0;
-            margin-bottom: 15px;
-            line-height: 1.4;
-            padding: 0 10px;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .card h2 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-            color: #FFD700;
-            text-align: center;
-        }
-        
-        .card p {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #FFD700;
-            font-size: 0.9rem;
-        }
-        
-        input {
-            width: 100%;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #FFD700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-            background: rgba(255, 255, 255, 0.15);
-        }
-        
-        .error-message {
-            color: #ff6b6b;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #FFD700, #FFA000);
-            color: #333;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.1s ease;
-            text-align: center;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
-        }
-        
-        .btn:active {
-            transform: translateY(1px);
-        }
-        
-        .btn:disabled {
-            background: #666;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-            color: #999;
-        }
-        
-        .warning {
-            background: rgba(255, 193, 7, 0.15);
-            border-left: 4px solid #FFC107;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .warning p {
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-        
-        .game-area {
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 15px;
-            padding: 15px;
-            position: relative;
-            height: 350px;
-            overflow: hidden;
-            margin: 20px 0;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-        }
-        
-        .sky {
+        .hero::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, #1e3c72, #2a5298, #1e3c72);
-            overflow: hidden;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 0, 0.03) 50%, transparent 70%);
+            animation: matrix 20s linear infinite;
         }
         
-        .airplane {
-            position: absolute;
-            bottom: 40px;
-            left: 40px;
-            width: 80px;
-            height: 40px;
-            background-image: url('https://www.mileurismogourmet.com/wp-content/uploads/2024/06/aviatorjuego1.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 20;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        @keyframes matrix {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
         }
         
-        .multiplier-display {
+        .main-title {
+            font-size: 52px;
+            margin-bottom: 20px;
+            color: #00ff00;
+            text-shadow: var(--glow-green);
+            position: relative;
+            animation: titleFloat 6s ease-in-out infinite;
+        }
+        
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .aviator-text {
+            font-size: 42px;
+            background: linear-gradient(90deg, #00ff00, #00cc00, #009900);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .aviator-text::after {
+            content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 12px 20px;
-            border-radius: 10px;
-            z-index: 30;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            animation: pulse 1.5s infinite;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ff00, transparent);
+            animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
         
-        .message {
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            color: #cccccc;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 18px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background-color: #00ff00;
+            color: var(--primary-black);
+            box-shadow: 0 0 15px #00ff00;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px #00ff00;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+        
+        .feature-card {
+            background-color: var(--light);
+            padding: 35px 25px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #00ff00;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 255, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 50px;
+            color: #00ff00;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        
+        .feature-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        
+        .feature-card p {
+            color: #cccccc;
+            line-height: 1.6;
+        }
+        
+        footer {
+            background-color: var(--light);
+            padding: 50px 0;
+            text-align: center;
+            margin-top: 80px;
+            border-top: 1px solid #00ff00;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 0, 0.03) 50%, transparent 70%);
+            animation: matrix 15s linear infinite;
+        }
+        
+        .footer-logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-yellow);
+            margin-bottom: 20px;
+            text-shadow: var(--glow-yellow);
+            background: linear-gradient(45deg, #000000, #1a1a1a, #000000);
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 2px solid var(--primary-yellow);
+            display: inline-block;
+        }
+        
+        .footer-btn {
+            background-color: #00ff00;
+            color: var(--primary-black);
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        
+        .footer-btn:hover {
+            background-color: #00cc00;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00ff00;
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        /* Signal oynasi uchun style */
+        .signal-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-black);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #00ff00;
+            background-color: var(--light);
+            position: relative;
+        }
+        
+        .signal-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #00ff00;
+            box-shadow: var(--glow-green);
+            animation: scanline 1.5s linear infinite;
+        }
+        
+        .signal-time {
+            font-size: 18px;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            padding: 20px 30px;
-            border-radius: 12px;
-            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid #00ff00;
+            box-shadow: var(--glow-green);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #00ff00;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        
+        .signal-section {
+            background-color: var(--light);
+            padding: 40px;
+            border-radius: 10px;
+            margin: 40px auto;
             text-align: center;
-            z-index: 100;
-            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
             width: 90%;
-            border: 2px solid;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            position: relative;
         }
         
-        .crash-message {
-            color: #F44336;
-            border-color: #F44336;
+        .signal-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #00ff00;
+            text-shadow: var(--glow-green);
         }
         
-        .success-message {
-            color: #4CAF50;
-            border-color: #4CAF50;
+        .simulator {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 600px;
+            border: 1px solid #00ff00;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
         }
         
-        .user-id-display {
-            background: rgba(255, 215, 0, 0.15);
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            text-align: center;
-            border-left: 4px solid #FFD700;
-            font-size: 0.9rem;
-            font-weight: 600;
+        .simulator-display {
+            font-size: 80px;
+            font-weight: bold;
+            color: #00ff00;
+            margin: 30px 0;
+            text-shadow: var(--glow-green);
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 2;
         }
         
-        .hidden {
-            display: none !important;
+        .simulator-display.final-value {
+            animation: popIn 0.5s ease-out;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .signal-btn {
+            background-color: #00ff00;
+            color: var(--primary-black);
+            padding: 18px 45px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px #00ff00;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .signal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .signal-btn:hover::before {
+            left: 100%;
+        }
+        
+        .signal-btn:hover {
+            background-color: #00cc00;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00ff00;
+        }
+        
+        .signal-info {
+            margin-top: 30px;
+            font-size: 18px;
+            color: var(--text);
+            background-color: rgba(0, 255, 0, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
         }
         
         .hacker-animation {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            flex-direction: column;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 0, 0.1) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: hacker 2s linear infinite;
+            display: none;
+            z-index: 1;
         }
         
-        .matrix-code {
-            color: #0f0;
-            font-family: monospace;
-            font-size: 1.1rem;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #0f0;
+        @keyframes hacker {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 200% 200%;
+            }
         }
         
-        .progress-bar {
-            width: 80%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-        
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #FFD700, #FFA000);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .share-section {
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .share-btn {
-            background: linear-gradient(135deg, #2196F3, #0b7dda);
-            display: inline-block;
-            margin: 5px;
-            padding: 12px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            border: none;
-            color: white;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.1s ease;
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
-        }
-        
-        .share-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
-        }
-        
-        .share-progress {
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .share-count {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #FFD700;
-        }
-        
-        .info-box {
-            background: rgba(33, 150, 243, 0.15);
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .info-box p {
-            font-size: 0.85rem;
-            margin-bottom: 0;
-            line-height: 1.4;
-        }
-        
-        .cloud {
+        .hacker-text {
             position: absolute;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: cloudMove 15s linear infinite;
+            color: #00ff00;
+            font-size: 14px;
+            opacity: 0;
+            animation: textFade 3s linear infinite;
+            font-family: 'Courier New', monospace;
         }
         
-        .cloud::before, .cloud::after {
-            content: '';
+        @keyframes textFade {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        /* Yangi effektlar */
+        .pulse-ring {
             position: absolute;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-        }
-        
-        .cloud-1 { animation-duration: 20s; animation-delay: 0s; }
-        .cloud-2 { animation-duration: 25s; animation-delay: 3s; }
-        .cloud-3 { animation-duration: 30s; animation-delay: 6s; }
-        
-        @keyframes cloudMove {
-            0% { transform: translateX(-100px); }
-            100% { transform: translateX(calc(100vw + 100px)); }
-        }
-        
-        .ground {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: linear-gradient(to top, #5D4037, #4E342E);
-            z-index: 5;
-        }
-        
-        .explosion {
-            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, #ff0000, #ff4500, transparent 70%);
+            border: 3px solid transparent;
             border-radius: 50%;
-            opacity: 0;
-            z-index: 25;
-            pointer-events: none;
-            transition: all 0.2s ease;
+            z-index: 1;
+            display: none;
         }
         
-        /* Telegram modal */
-        .telegram-modal {
-            position: fixed;
+        .pulse-ring.red {
+            border-color: #ff0000;
+            box-shadow: var(--glow-green);
+            animation: pulseRingRed 1s linear infinite;
+        }
+        
+        .pulse-ring.blue {
+            border-color: #0066ff;
+            box-shadow: var(--glow-blue);
+            animation: pulseRingBlue 1s linear infinite reverse;
+        }
+        
+        .pulse-ring.green {
+            border-color: #00ff00;
+            box-shadow: var(--glow-green);
+            animation: pulseRingGreen 1.5s linear infinite;
+        }
+        
+        @keyframes pulseRingRed {
+            0% {
+                width: 200px;
+                height: 200px;
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                width: 400px;
+                height: 400px;
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(180deg);
+            }
+        }
+        
+        @keyframes pulseRingBlue {
+            0% {
+                width: 200px;
+                height: 200px;
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                width: 400px;
+                height: 400px;
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(-180deg);
+            }
+        }
+        
+        @keyframes pulseRingGreen {
+            0% {
+                width: 150px;
+                height: 150px;
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                width: 350px;
+                height: 350px;
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+        
+        /* Matrix code rain effect */
+        .matrix-code {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 20px;
+            pointer-events: none;
+            z-index: -1;
         }
         
-        .telegram-content {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            border: 2px solid #0088cc;
+        .code {
+            position: absolute;
+            color: #00ff00;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            animation: fall linear infinite;
+            text-shadow: 0 0 5px #00ff00;
         }
         
-        .telegram-content h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+        @keyframes fall {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(1000%);
+                opacity: 0;
+            }
         }
         
-        .telegram-message {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            text-align: left;
-            font-size: 0.9rem;
-            color: #333;
-            border-left: 4px solid #0088cc;
-            line-height: 1.5;
-        }
-        
-        .telegram-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .telegram-btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.1s ease;
-            font-size: 0.9rem;
-        }
-        
-        .telegram-copy {
-            background: #FFD700;
-            color: #333;
-        }
-        
-        .telegram-open {
-            background: #0088cc;
-            color: white;
-        }
-        
-        .telegram-close {
-            background: #666;
-            color: white;
-        }
-        
-        /* Responsive */
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
+        @media (max-width: 768px) {
+            .hero {
+                padding: 50px 0;
             }
             
-            header {
-                padding: 15px 0;
-                margin-bottom: 15px;
+            .main-title {
+                font-size: 36px;
             }
             
-            h1 {
-                font-size: 1.5rem;
+            .aviator-text {
+                font-size: 28px;
             }
             
-            .subtitle {
-                font-size: 0.8rem;
-                padding: 0 8px;
+            .hero p {
+                font-size: 16px;
+                padding: 0 15px;
             }
             
-            .card {
-                padding: 15px;
-                margin-bottom: 15px;
+            .simulator-display {
+                font-size: 60px;
             }
             
-            .card h2 {
-                font-size: 1.1rem;
-            }
-            
-            .game-area {
-                height: 300px;
-                padding: 10px;
-            }
-            
-            .airplane {
-                width: 70px;
-                height: 35px;
-            }
-            
-            .multiplier-display {
-                font-size: 1.5rem;
-                padding: 10px 15px;
-            }
-            
-            .message {
-                font-size: 1rem;
-                padding: 15px 20px;
-            }
-            
-            .telegram-buttons {
+            .buttons {
                 flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <div class="matrix-bg" id="matrixBg"></div>
+    
     <div class="container">
         <header>
-            <h1>✈️ AVIATOR SIGNAL</h1>
-            <p class="subtitle">Samolyot balandlikka ko'tariladi - O'z vaqtida chiqib oling! 🚀</p>
+            <div class="logo">
+                <div class="logo-text">ONLYBETS</div>
+                <div class="logo-subtext">Aviator Signal</div>
+            </div>
         </header>
         
-        <div class="card" id="loginSection">
-            <h2>AIFUT Promokodi bilan Ro'yxatdan O'ting</h2>
-            <p>O'yinni oldindan ko'rish uchun AIFUT promokodi orqali ro'yxatdan o'tgan ID raqamingizni kiriting</p>
+        <section class="hero">
+            <h1 class="main-title">KELAJAKNI BILISH KUCHI</h1>
+            <div class="aviator-text">AVIATOR SIGNAL</div>
+            <p>Bizning maxsus algoritm yordamida keyingi Aviator uchish balandligini oldindan biling va o'yinda g'alaba qozonish imkoniyatingizni oshiring. Hacker texnologiyalari asosida ishlab chiqilgan platforma . ! AIFUT promokod faollashtirilganiga amin boling AIFUT promokod orqali ro'yhatdan o'tgan profillar uchun ishlaydi</p>
             
-            <div class="form-group">
-                <label for="userId">ID Raqamingiz</label>
-                <input type="text" id="userId" placeholder="ID raqamingizni kiriting..." maxlength="11">
-                <div class="error-message" id="idError">ID raqam noto'g'ri!</div>
+            <div class="buttons">
+                <a href="https://onlybetscasino1.com/ru/app/register?" class="btn btn-primary">
+                    <i class="fas fa-gamepad"></i>
+                    Ro'yhatdan o'tish
+                </a>
+                <button class="btn btn-secondary" id="signalBtn">
+                    <i class="fas fa-chart-line"></i>
+                    Signal Olish
+                </button>
             </div>
-            
-            <button class="btn" id="startGameBtn">Signal Olish 🔮</button>
-        </div>
+        </section>
         
-        <div id="warningSection" class="card hidden">
-            <h2>⚠️ Diqqat! Ogohlantirish</h2>
-            <div class="warning">
-                <p><strong>AZARTga berilmang! 🎲</strong></p>
-                <p>Kunlik yetarli daromadni olib to'xtating. AIFUT promokod bilan ro'yxatdan o'tmagan bo'lsangiz bloklanasiz</p>
-            </div>
-            
-            <div class="user-id-display">
-                <strong>ID Raqamingiz:</strong> <span id="displayUserId"></span>
-            </div>
-            
-            <p>Tayyor bo'lsangiz, "Signal olish" tugmasini bosing.</p>
-            <button class="btn" id="confirmStartBtn">Signal Olish 🔮</button>
-        </div>
-        
-        <div id="gameSection" class="card hidden">
-            <h2>Kelgusi O'yin Bashorati</h2>
-            <p>Ushbu oyin kelayotgan oyinni modellashtiradi. Samolyot kutilayotgan eng minimal kf da portlaydi oyin tugagandan song oz bukmekeringizda stavka qoyib samalyot portlagan kfga yetmasdan yutuqni oling.</p>
-            
-            <div class="user-id-display">
-                <strong>ID Raqamingiz:</strong> <span id="gameUserId"></span>
-            </div>
-            
-            <div class="game-area">
-                <div class="sky" id="sky">
-                    <div class="ground"></div>
-                    <div class="multiplier-display" id="multiplierDisplay">1.00x</div>
-                    <div class="airplane" id="airplane"></div>
-                    <div class="message crash-message" id="crashMessage">Samolyot portladi!</div>
-                    <div class="message success-message hidden" id="successMessage">Muvaffaqiyatli chiqib oldingiz!</div>
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
                 </div>
+                <h3 class="feature-title">MAXFIY ALGORITM</h3>
+                <p>Bizning maxsus algoritm 85% dan yuqori aniqlik darajasi bilan ishlaydi va sizga ishonchli signallar taqdim etadi.</p>
             </div>
             
-            <button class="btn" id="playAgainBtn">Keyingi Signalni Bilish ➡️</button>
-        </div>
-        
-        <div id="shareSection" class="card hidden">
-            <h2>Do'stlaringizni Taklif Qiling 📢</h2>
-            
-            <div class="user-id-display">
-                <strong>ID Raqamingiz:</strong> <span id="shareUserId"></span>
-            </div>
-            
-            <p>Signal olishni davom ettirish va katta yutuqlarga erishish uchun do'stlaringiz bilan baham ko'ring! 🤝</p>
-            
-            <div class="share-progress">
-                <p>Taklif qilingan do'stlar: <span class="share-count" id="shareCount">0</span> / 20</p>
-                <div class="progress-bar">
-                    <div class="progress" id="shareProgress"></div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
                 </div>
+                <h3 class="feature-title">TEZKOR SIGNAL</h3>
+                <p>Har 3 daqiqada yangi signal oling va o'yinda raqiblaringizdan oldinda bo'ling.</p>
             </div>
             
-            <div class="share-buttons">
-                <button class="btn share-btn" id="shareBtn">Do'stlarga Taklif Qilish 📤</button>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">XAVFSIZ PLATFORMA</h3>
+                <p>Bizning platformamiz butunlay xavfsiz va shaxsiy ma'lumotlaringiz himoyalangan.</p>
             </div>
-            
-            <div class="info-box">
-                <p><strong>Eslatma:</strong> FAQAT TELEGRAM ORQALI TAKLIF QILING</p>
-            </div>
-        </div>
+        </section>
     </div>
     
-    <!-- Telegram Modal -->
-    <div id="telegramModal" class="telegram-modal hidden">
-        <div class="telegram-content">
-            <h3>📤 Telegram Orqali Taklif Qiling</h3>
-            <p>Quyidagi xabarni nusxalang va Telegram'da do'stlaringizga yuboring:</p>
-            
-            <div class="telegram-message" id="telegramMessage">
-                Salom dostim! 💫 100% signal beruvchi va daromad qilish mumkin bo'lgan bot topdim. Sen ham ro'yxatdan o'tib ol va daromad qil! 🚀
-
-Bot manzili: t.me/Strategioyinlar_bot
-
-💰 Katta yutuqlar sizni kutmoqda!
-            </div>
-            
-            <div class="telegram-buttons">
-                <button class="telegram-btn telegram-copy" id="copyTelegramBtn">Nusxalash 📋</button>
-                <button class="telegram-btn telegram-open" id="openTelegramBtn">Telegram'ga O'tish ↗️</button>
-                <button class="telegram-btn telegram-close" id="closeTelegramBtn">Yopish ✖️</button>
+    <footer>
+        <div class="container">
+            <div class="footer-logo">ONLYBETS</div>
+            <p>Eng ishonchli Aviator signal platformasi</p>
+            <a href="https://onlybetslp.com/aviator/" class="footer-btn">
+                <i class="fas fa-user-plus"></i>
+                Ro'yxatdan O'tish
+            </a>
+            <div class="copyright">
+                &copy; 2023 OnlyBets. Barcha huquqlar himoyalangan.
             </div>
         </div>
-    </div>
-    
-    <div id="hackerAnimation" class="hacker-animation hidden">
-        <div class="matrix-code" id="matrixCode">AVIATOR SIGNAL YUKLANMOQDA...</div>
-        <div class="progress-bar">
-            <div class="progress" id="hackerProgress"></div>
+    </footer>
+
+    <!-- Signal oynasi -->
+    <div class="signal-window" id="signalWindow">
+        <div class="matrix-bg" id="signalMatrix"></div>
+        <div class="signal-header">
+            <div class="logo">
+                <div class="logo-text">ONLYBETS</div>
+                <div class="logo-subtext">Aviator Signal</div>
+            </div>
+            <div class="signal-time" id="currentTime"></div>
+            <button class="close-btn" id="closeSignalWindow">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="signal-section">
+            <h2 class="signal-title">KEYINGI UCHISH BALANDLIGI</h2>
+            
+            <div class="simulator">
+                <div class="hacker-animation" id="hackerAnimation"></div>
+                <div class="pulse-ring red" id="pulseRingRed"></div>
+                <div class="pulse-ring blue" id="pulseRingBlue"></div>
+                <div class="pulse-ring green" id="pulseRingGreen"></div>
+                <div class="simulator-display" id="simulatorDisplay">1.00x</div>
+                <button class="signal-btn" id="getSignalBtn">
+                    <i class="fas fa-bolt"></i>
+                    SIGNALNI Olish
+                </button>
+                <div class="signal-info" id="signalInfo">
+                    Signal tayyorlanmoqda. "SIGNALNI OLISH" tugmasini bosing.
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Elementlarni olish
-            const loginSection = document.getElementById('loginSection');
-            const startGameBtn = document.getElementById('startGameBtn');
-            const warningSection = document.getElementById('warningSection');
-            const confirmStartBtn = document.getElementById('confirmStartBtn');
-            const gameSection = document.getElementById('gameSection');
-            const airplane = document.getElementById('airplane');
-            const multiplierDisplay = document.getElementById('multiplierDisplay');
-            const crashMessage = document.getElementById('crashMessage');
-            const successMessage = document.getElementById('successMessage');
-            const playAgainBtn = document.getElementById('playAgainBtn');
-            const shareSection = document.getElementById('shareSection');
-            const shareCount = document.getElementById('shareCount');
-            const shareProgress = document.getElementById('shareProgress');
-            const shareBtn = document.getElementById('shareBtn');
+            const signalBtn = document.getElementById('signalBtn');
+            const signalWindow = document.getElementById('signalWindow');
+            const closeSignalWindow = document.getElementById('closeSignalWindow');
+            const currentTime = document.getElementById('currentTime');
+            const getSignalBtn = document.getElementById('getSignalBtn');
+            const simulatorDisplay = document.getElementById('simulatorDisplay');
+            const signalInfo = document.getElementById('signalInfo');
             const hackerAnimation = document.getElementById('hackerAnimation');
-            const matrixCode = document.getElementById('matrixCode');
-            const hackerProgress = document.getElementById('hackerProgress');
-            const idError = document.getElementById('idError');
-            const sky = document.getElementById('sky');
+            const matrixBg = document.getElementById('matrixBg');
+            const signalMatrix = document.getElementById('signalMatrix');
+            const pulseRingRed = document.getElementById('pulseRingRed');
+            const pulseRingBlue = document.getElementById('pulseRingBlue');
+            const pulseRingGreen = document.getElementById('pulseRingGreen');
             
-            // Telegram modal elementlari
-            const telegramModal = document.getElementById('telegramModal');
-            const telegramMessage = document.getElementById('telegramMessage');
-            const copyTelegramBtn = document.getElementById('copyTelegramBtn');
-            const openTelegramBtn = document.getElementById('openTelegramBtn');
-            const closeTelegramBtn = document.getElementById('closeTelegramBtn');
-            
-            // ID ko'rsatish elementlari
-            const displayUserId = document.getElementById('displayUserId');
-            const gameUserId = document.getElementById('gameUserId');
-            const shareUserId = document.getElementById('shareUserId');
-            
-            // O'yin o'zgaruvchilari
-            let gameActive = false;
-            let currentMultiplier = 1.00;
-            let gameInterval;
-            let crashPoint = 1.00;
-            let currentUserId = '';
-            let shareProgressValue = 0;
-            let shareInterval;
-            let gameRound = 0;
-            
-            // ID raqamni tekshirish
-            function validateUserId(userId) {
-                const idRegex = /^1\d{8,10}$/;
-                return idRegex.test(userId);
+            // Matrix code rain effect
+            function createMatrixCodeRain(container) {
+                const chars = "01010101010101010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                const fontSize = 14;
+                const columns = Math.floor(window.innerWidth / fontSize);
+                
+                for (let i = 0; i < columns; i++) {
+                    const code = document.createElement('div');
+                    code.className = 'code';
+                    code.style.left = (i * fontSize) + 'px';
+                    code.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                    code.style.animationDelay = (Math.random() * 5) + 's';
+                    code.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+                    container.appendChild(code);
+                }
             }
             
-            // ID inputini tekshirish
-            document.getElementById('userId').addEventListener('input', function() {
-                const userId = this.value.trim();
-                if (userId === '') {
-                    idError.style.display = 'none';
-                    startGameBtn.disabled = false;
-                } else if (!validateUserId(userId)) {
-                    idError.style.display = 'block';
-                    startGameBtn.disabled = true;
-                } else {
-                    idError.style.display = 'none';
-                    startGameBtn.disabled = false;
-                }
+            createMatrixCodeRain(matrixBg);
+            createMatrixCodeRain(signalMatrix);
+            
+            // Vaqtni yangilash funksiyasi
+            function updateTime() {
+                const now = new Date();
+                const options = { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit'
+                };
+                currentTime.textContent = now.toLocaleDateString('uz-UZ', options);
+            }
+            
+            // Dastlab vaqtni yangilash
+            updateTime();
+            // Har soniya vaqtni yangilash
+            setInterval(updateTime, 1000);
+            
+            // Signal oynasini ochish
+            signalBtn.addEventListener('click', function() {
+                signalWindow.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
             });
             
-            // O'yinni boshlash
-            startGameBtn.addEventListener('click', function() {
-                const userId = document.getElementById('userId').value.trim();
-                
-                if (userId === '') {
-                    alert('Iltimos, ID raqamingizni kiriting!');
-                    return;
-                }
-                
-                if (!validateUserId(userId)) {
-                    alert('ID raqam 1 bilan boshlanadi va 9-11 xonali bo\'lishi kerak!');
-                    return;
-                }
-                
-                currentUserId = userId;
-                displayUserId.textContent = userId;
-                
-                loginSection.classList.add('hidden');
-                warningSection.classList.remove('hidden');
+            // Signal oynasini yopish
+            closeSignalWindow.addEventListener('click', function() {
+                signalWindow.style.display = 'none';
+                document.body.style.overflow = 'auto';
             });
             
-            // Tasdiqlash tugmasi
-            confirmStartBtn.addEventListener('click', function() {
-                warningSection.classList.add('hidden');
-                startHackerAnimation();
-            });
-            
-            // Haker animatsiyasi
-            function startHackerAnimation() {
-                hackerAnimation.classList.remove('hidden');
-                hackerProgress.style.width = '0%';
+            // Signal olish tugmasi
+            getSignalBtn.addEventListener('click', function() {
+                // Haker animatsiyasini ko'rsatish
+                hackerAnimation.style.display = 'block';
+                pulseRingRed.style.display = 'block';
+                pulseRingBlue.style.display = 'block';
+                pulseRingGreen.style.display = 'block';
+                simulatorDisplay.textContent = "1.01x";
+                signalInfo.textContent = "Hakerlar signalni aniqlayotgan...";
+                getSignalBtn.disabled = true;
                 
-                const codes = ['SIGNAL YUKLANMOQDA...', 'SERVERGA KIRISH...', 'BASHORAT OLINMOQDA...', 'TAYYORLANMOQDA...', 'TAYYOR!'];
-                let codeIndex = 0;
+                // 2 soniyalik animatsiya
+                let counter = 0;
+                const totalTime = 20; // 2 soniya (100ms * 20)
                 
-                const codeInterval = setInterval(() => {
-                    matrixCode.textContent = codes[codeIndex];
-                    codeIndex++;
+                const interval = setInterval(() => {
+                    // 1.01 dan 99.99 gacha random sonlar
+                    const randomValue = (Math.random() * 98.98 + 1.01).toFixed(2);
+                    simulatorDisplay.textContent = randomValue + "x";
+                    counter++;
                     
-                    if (codeIndex >= codes.length) {
-                        clearInterval(codeInterval);
+                    // Asosan 1.50 dan 4.99 gacha bo'lgan qiymatlar ko'p chiqishi uchun
+                    if (Math.random() > 0.3) {
+                        const commonValue = (Math.random() * 3.49 + 1.50).toFixed(2);
+                        simulatorDisplay.textContent = commonValue + "x";
                     }
-                }, 400);
-                
-                setTimeout(() => {
-                    hackerProgress.style.width = '100%';
+                    
+                    if (counter >= totalTime) {
+                        clearInterval(interval);
+                        
+                        // Yakuniy qiymat (ko'pincha 1.50-4.99 oralig'ida)
+                        const finalValue = (Math.random() * 3.49 + 1.50).toFixed(2);
+                        simulatorDisplay.textContent = finalValue + "x";
+                        
+                        // Kattalashish effekti
+                        simulatorDisplay.classList.add('final-value');
+                        
+                        // Signal ma'lumotini yangilash
+                        signalInfo.innerHTML = `<strong>Keyingi uchish balandligi:</strong> ${finalValue}x<br>
+                                               <span style="color: #00ff00; text-shadow: 0 0 5px #00ff00;">Bu signal 85% ishonchlilik darajasiga ega</span>`;
+                        
+                        // Animatsiyalarni yashirish
+                        setTimeout(() => {
+                            hackerAnimation.style.display = 'none';
+                            pulseRingRed.style.display = 'none';
+                            pulseRingBlue.style.display = 'none';
+                            pulseRingGreen.style.display = 'none';
+                            simulatorDisplay.classList.remove('final-value');
+                            getSignalBtn.disabled = false;
+                        }, 500);
+                    }
                 }, 100);
-                
-                setTimeout(() => {
-                    hackerAnimation.classList.add('hidden');
-                    startGame();
-                }, 2000);
-            }
-            
-            // O'yinni boshlash
-            function startGame() {
-                gameSection.classList.remove('hidden');
-                gameUserId.textContent = currentUserId;
-                gameActive = true;
-                currentMultiplier = 1.00;
-                crashPoint = generateCrashPoint();
-                gameRound++;
-                
-                // UI ni yangilash
-                airplane.style.bottom = '40px';
-                airplane.style.left = '40px';
-                airplane.style.transform = 'scale(1)';
-                multiplierDisplay.textContent = '1.00x';
-                multiplierDisplay.style.color = '#FFD700';
-                crashMessage.style.display = 'none';
-                successMessage.classList.add('hidden');
-                
-                // Bulutlarni yaratish
-                createClouds();
-                
-                // Samolyotni markazga ko'tarish
-                setTimeout(() => {
-                    airplane.style.bottom = '50%';
-                    airplane.style.left = '50%';
-                    airplane.style.transform = 'translate(-50%, 50%) scale(1.3)';
-                }, 300);
-                
-                // O'yin tsikli
-                gameInterval = setInterval(updateGame, 50);
-            }
-            
-            // O'yinni yangilash
-            function updateGame() {
-                if (!gameActive) return;
-                
-                // Multiplier ni oshirish
-                currentMultiplier += 0.02;
-                multiplierDisplay.textContent = currentMultiplier.toFixed(2) + 'x';
-                
-                // Multiplier rangini o'zgartirish
-                if (currentMultiplier > 8) {
-                    multiplierDisplay.style.color = '#4CAF50';
-                } else if (currentMultiplier > 4) {
-                    multiplierDisplay.style.color = '#FF9800';
-                }
-                
-                // Crash nuqtasiga tekshirish
-                if (currentMultiplier >= crashPoint) {
-                    crash();
-                }
-            }
-            
-            // Crash (o'yin tugashi)
-            function crash() {
-                if (!gameActive) return;
-                
-                // Portlash effekti
-                createExplosion();
-                
-                // Xabar ko'rsatish
-                crashMessage.textContent = `Samolyot ${currentMultiplier.toFixed(2)}x da portlab ketdi!`;
-                crashMessage.style.display = 'block';
-                
-                // O'yinni tugatish
-                endGame();
-                
-                // Ikkinchi o'yindan keyin taklif qilish bo'limiga o'tish
-                if (gameRound >= 2) {
-                    setTimeout(() => {
-                        gameSection.classList.add('hidden');
-                        startShareSection();
-                    }, 2000);
-                }
-            }
-            
-            // Portlash effekti yaratish
-            function createExplosion() {
-                const explosion = document.createElement('div');
-                explosion.className = 'explosion';
-                explosion.style.left = '50%';
-                explosion.style.bottom = '50%';
-                explosion.style.transform = 'translate(-50%, 50%)';
-                
-                sky.appendChild(explosion);
-                
-                setTimeout(() => {
-                    explosion.style.opacity = '0.8';
-                }, 10);
-                
-                setTimeout(() => {
-                    explosion.style.opacity = '0';
-                    explosion.style.transform = 'translate(-50%, 50%) scale(1.8)';
-                }, 400);
-                
-                setTimeout(() => {
-                    if (explosion.parentNode) {
-                        explosion.parentNode.removeChild(explosion);
-                    }
-                }, 800);
-            }
-            
-            // O'yinni tugatish
-            function endGame() {
-                gameActive = false;
-                clearInterval(gameInterval);
-            }
-            
-            // Crash nuqtasini yaratish (1-12 oralig'ida)
-            function generateCrashPoint() {
-                return 1 + Math.random() * 11; // 1.00 dan 12.00 gacha
-            }
-            
-            // Yana o'ynash tugmasi
-            playAgainBtn.addEventListener('click', function() {
-                startHackerAnimation();
             });
             
-            // Taklif qilish bo'limini boshlash
-            function startShareSection() {
-                shareSection.classList.remove('hidden');
-                shareUserId.textContent = currentUserId;
-                shareProgressValue = 0;
-                updateShareProgress();
-                
-                clearInterval(shareInterval);
-                shareInterval = setInterval(() => {
-                    if (shareProgressValue < 18) {
-                        shareProgressValue += 0.5;
-                        updateShareProgress();
-                    }
-                }, 60000);
+            // Haker animatsiyasi uchun matnlar qo'shish
+            const hackerTexts = [
+                "ANALYZING...", "DECRYPTING...", "ACCESSING...", 
+                "CALCULATING...", "PROCESSING...", "HACKING...",
+                "DECODING...", "CRACKING...", "SCANNING..."
+            ];
+            
+            const simulator = document.querySelector('.simulator');
+            
+            // Haker matnlarini tasodifiy joylashtirish
+            for (let i = 0; i < 20; i++) {
+                const hackerText = document.createElement('div');
+                hackerText.className = 'hacker-text';
+                hackerText.textContent = hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
+                hackerText.style.left = Math.random() * 80 + 10 + '%';
+                hackerText.style.top = Math.random() * 80 + 10 + '%';
+                hackerText.style.animationDelay = Math.random() * 3 + 's';
+                simulator.appendChild(hackerText);
             }
-            
-            // Progressni yangilash
-            function updateShareProgress() {
-                const displayValue = Math.min(Math.floor(shareProgressValue), 18);
-                shareCount.textContent = displayValue;
-                shareProgress.style.width = (displayValue / 20 * 100) + '%';
-            }
-            
-            // Taklif qilish tugmasi
-            shareBtn.addEventListener('click', function() {
-                telegramModal.classList.remove('hidden');
-            });
-            
-            // Telegram modal tugmalari
-            copyTelegramBtn.addEventListener('click', function() {
-                const message = telegramMessage.textContent;
-                copyToClipboard(message);
-                alert('Xabar nusxalandi! Endi Telegram\'da do\'stlaringizga yuborishingiz mumkin.');
-            });
-            
-            openTelegramBtn.addEventListener('click', function() {
-                window.open('https://t.me/share/url?url=&text=' + encodeURIComponent(telegramMessage.textContent), '_blank');
-            });
-            
-            closeTelegramBtn.addEventListener('click', function() {
-                telegramModal.classList.add('hidden');
-            });
-            
-            // Clipboard ga nusxalash funksiyasi
-            function copyToClipboard(text) {
-                if (navigator.clipboard && window.isSecureContext) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        console.log('Xabar nusxalandi');
-                    }).catch(() => {
-                        fallbackCopyToClipboard(text);
-                    });
-                } else {
-                    fallbackCopyToClipboard(text);
-                }
-            }
-            
-            // Eski brauzerlar uchun
-            function fallbackCopyToClipboard(text) {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.position = "fixed";
-                textArea.style.left = "-999999px";
-                textArea.style.top = "-999999px";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                
-                try {
-                    document.execCommand('copy');
-                } catch (err) {
-                    console.error('Nusxalashda xatolik:', err);
-                }
-                
-                document.body.removeChild(textArea);
-            }
-            
-            // Bulutlarni yaratish
-            function createClouds() {
-                const existingClouds = document.querySelectorAll('.cloud');
-                existingClouds.forEach(cloud => cloud.remove());
-                
-                for (let i = 0; i < 3; i++) {
-                    const cloud = document.createElement('div');
-                    cloud.className = `cloud cloud-${i+1}`;
-                    
-                    const size = Math.random() * 50 + 30;
-                    const top = Math.random() * 70 + 10;
-                    const opacity = Math.random() * 0.6 + 0.3;
-                    
-                    cloud.style.width = `${size}px`;
-                    cloud.style.height = `${size / 2}px`;
-                    cloud.style.top = `${top}%`;
-                    cloud.style.opacity = opacity;
-                    cloud.style.background = 'rgba(255, 255, 255, 0.9)';
-                    cloud.style.borderRadius = '50%';
-                    cloud.style.boxShadow = `
-                        ${size/3}px ${size/6}px 0 ${size/6}px rgba(255, 255, 255, 0.9),
-                        -${size/4}px ${size/5}px 0 ${size/7}px rgba(255, 255, 255, 0.9)
-                    `;
-                    
-                    sky.appendChild(cloud);
-                }
-            }
-            
-            // Dastlabki sozlash
-            createClouds();
         });
     </script>
 </body>
